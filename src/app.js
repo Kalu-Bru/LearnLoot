@@ -51,8 +51,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors()); 
 
-const PORT = 3000;
-const HOST = '0.0.0.0';
+const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST;
 
 const expressServer = app.listen(PORT, HOST, () => {
     console.log(`Server running at http://0.0.0.0:${PORT}/`);
