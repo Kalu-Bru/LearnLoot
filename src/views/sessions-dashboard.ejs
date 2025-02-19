@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/style.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+        <script src="/socket.io/socket.io.min.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <div id="logo">
+                <a href="/tutor" id="back-to-tutor"><i class="fa-solid fa-chevron-left"></i> Tutor Dashboard</a>
+            </div>
+
+            <div id="profile-sidebar">
+                <button id="profile-icon" onclick="doSome()"></button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="menu-sidebar">
+                <div id="session-materials">
+                    Students
+                </div>
+                <div id="session-chat">
+                    Requests
+                </div>
+                <div>
+                    <button id="session-delete" onclick="deleteTutoring()"><i class="fa-solid fa-trash-can"></i> Delete session</button>
+                </div>
+                <!-- <div>
+                    <a href="/videocall">Video</a>
+                </div> -->
+                <div id="highlight-square">
+
+                </div>
+            </div>
+            <div class="content-session" id="session-content">
+                <div id="active-students">
+                    <h1>Your students</h1>
+                    <div id="students-full">
+                        <% if (event.students.length > 0) { %>
+                            <% event.students.forEach(student => { %>
+                                <div id="session-student">
+                                    <div id="session-student-header">
+                                        <%= student %>
+                                    </div>
+                                    <a href="/tutor/session/<%= id %>/<%= event.students.indexOf(student) %>" style="text-decoration:none;">
+                                        Select
+                                    </a>
+                                </div>
+                            <% }) %>
+                        <% } else { %>
+                            <div id="student-empty-message">
+                                <span>You don't have any students yet, enhance your profile to get recognized!</span>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <div id="requests-students">
+                    <h1>Students requests</h1>
+                    <div id="requests-container">
+                        <% if (eventReq.length > 0) { %>
+                            <% eventReq.forEach(request => { %>
+                                <div id="session-request">
+                                    <div id="request-header">
+                                        <%= request.username %>
+                                    </div>
+                                    <div id="request-buttons">
+                                        <form action="/request/reject/<%= event._id %>" method="post">
+                                            <input type="hidden" value="<%= request._id %>" name="requestId">
+                                            <button type="submit" id="request-reject">Reject</button>
+                                        </form>
+                                        <form action="/request/accept/<%= event._id %>" method="post">
+                                            <input type="hidden" value="<%= request._id %>" name="requestId">
+                                            <input type="hidden" value="<%= request.username %>" name="username">
+                                            <button type="submit" id="request-accept">Accept</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        <% } else { %>
+                            <div id="student-empty-message">
+                                <span>You have no requests yet, when a student applies to your session, it will show up here!</span>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div id="delete-tutor-alert" style="display:none;">
+                <div id="delete-alert-span">Are you sure to delete this tutoring session?</div>
+                <div id="delete-alert-buttons">
+                    <button id="close-delete-tutoring" onclick="closeDeleteTutoring()">Cancel</button>
+                    <form action="/tutor/session/<%= id %>" method="post">
+                        <button id="confirm-delete-tutoring" type="submit">Yes, delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="/videocall.js"></script>
+    </body>
+</html>

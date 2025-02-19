@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/style.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <div id="logo">
+                <a href="/marketplace">LEARN<span id="title-fx">LOOT</span></a>
+            </div>
+
+            <div id="profile-sidebar">
+                <button id="profile-icon" onclick="doSome()"></button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="menu-sidebar">
+                <a href="/home"><i class="fa-solid fa-table-list" style="padding-right:5px;"></i>Overview</a>
+                <a href="/schedule"><i class="fa-regular fa-calendar" style="padding-right:5px;"></i>Schedule</a>
+                <a href="/tutor"><i class="fa-solid fa-person-chalkboard" style="padding-right:5px;"></i>Tutoring</a>
+                <a href="" id="activated-bg"><i class="fa-solid fa-graduation-cap" style="padding-right:5px;"></i>Classes</a>
+            </div>
+
+            <div class="content" id="tutor-content">
+                <div id="content-header">
+                    <a href="/classes/search" id="search-tutor">
+                        <span id="find-tutor-span">Find a tutor</span>
+                        <i class="fa-solid fa-magnifying-glass" style="padding-right:10px;"></i>
+                    </a>
+                </div>
+                <div id="classes-dashboard">
+                    <h1>Your classes</h1>
+                    <div id="classes-sessions">
+                        <% if (events.length > 0) { %>
+                            <% events.forEach(event => { %>
+                                <div id="single-tutoring-session">
+                                    <a href="/classes/<%= event._id %>" style="text-decoration:none;">
+                                        <div id="tutoring-session-header">
+                                            <span><%= event.subject %></span>
+                                        </div>
+                                        <img id="subject-image" src="/images/subjects/<%= event.subject %>.jpg">
+                                        <ul>
+                                            <li><%= event.language %></li>
+                                            <li><%= event.level %></li>
+                                            <li><%= event.price %> CHF/h</li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            <% }) %>
+                        <% } else { %>
+                            <div id="classes-empty-message">
+                                <span>You're not participating in any class. Go to the "search" section to find the perfect tutor!</span>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/script.js"></script>
+    </body>
+</html>

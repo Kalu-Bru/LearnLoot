@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/style.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <div id="logo">
+                <a href="/marketplace">LEARN<span id="title-fx">LOOT</span></a>
+            </div>
+
+            <div id="profile-sidebar">
+                <button id="profile-icon" onclick="doSome()"></button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="menu-sidebar">
+                <a href="/home"><i class="fa-solid fa-table-list" style="padding-right:5px;"></i>Overview</a>
+                <a href="/schedule"><i class="fa-regular fa-calendar" style="padding-right:5px;"></i>Schedule</a>
+                <a href="" id="activated-bg"><i class="fa-solid fa-person-chalkboard" style="padding-right:5px;"></i>Tutoring</a>
+                <a href="/classes"><i class="fa-solid fa-graduation-cap" style="padding-right:5px;"></i>Classes</a>
+            </div>
+
+            <div class="content" id="tutor-content">
+                <div id="content-header">
+                    <!-- <button class="add-tutor" onclick="newTutoring()">&#65291; </button> -->
+                    <button class="add-tutor" onclick="newTutoring()">
+                        <h2 class="plus-icon">&#65291;</h2>
+                    </button>
+                </div>
+                <h1 id="tutor-h1">Your tutoring sessions</h1>
+                <div id="tutoring-dashboard">
+                    <% if (events.length > 0) { %>
+                        <% events.forEach(event => { %>
+                            <div id="single-tutoring-session">
+                                <a href="/tutor/session/<%= event._id %>" style="text-decoration:none;">
+                                    <div id="tutoring-session-header">
+                                        <span><%= event.subject %></span>
+                                    </div>
+                                    <img id="subject-image" src="/images/subjects/<%= event.subject %>.jpg">
+                                    <ul>
+                                        <li><%= event.language %></li>
+                                        <li><%= event.level %></li>
+                                        <li><%= event.price %> CHF/h</li>
+                                    </ul>
+                                </a>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div id="add-tutoring-form" style="display:none;">
+            <div id="tutor-form-header">
+                <span id="header-title-tutor">Add new tutoring session</span>
+                <button id="close-form-tutor" onclick="closeTutoring()">&#x2715;</button>
+            </div>
+            <form action="/tutoring" method="post" id="tutoring-form">
+                <div class="input-field">
+                    <input id="subjectInput" class="form__field" name="subject" placeholder="Insert subject" required autocomplete="off">
+                    <ul id="customDropdown" class="dropdown">
+                        <li>Mathematics</li>
+                        <li>Physics</li>
+                        <li>Chemistry</li>
+                        <li>Economics</li>
+                        <li>History</li>
+                        <li>Philosophy</li>
+                        <li>Biology</li>
+                    </ul>
+                </div>
+                <div class="input-field">
+                    <input id="languageInput" class="form__field" name="language" placeholder="Insert teaching language" required autocomplete="off">
+                    <ul id="customDropdown2" class="dropdown2">
+                        <li>Italiano</li>
+                        <li>Français</li>
+                        <li>Deutsch</li>
+                        <li>English</li>
+                    </ul>
+                </div>
+                <div class="input-field">
+                    <input id="levelInput" class="form__field" name="level" placeholder="Insert academic level" required autocomplete="off">
+                    <ul id="customDropdown3" class="dropdown3">
+                        <li>Middle School</li>
+                        <li>High School</li>
+                        <li>College</li>
+                    </ul>
+                </div>
+                <div class="input-field">
+                    <input type="number" class="form__field" name="price" placeholder="Insert hourly price" required>
+                </div>
+                <div class="input-field">
+                    <input type="submit" class="form__field__submit" value="Create tutoring session">
+                </div>
+            </form>
+        </div>
+        <script src="/script.js"></script>
+    </body>
+</html>

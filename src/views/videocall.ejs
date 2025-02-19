@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/videocall.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <div id="logo">
+                
+            </div>
+
+            <div id="profile-sidebar">
+                <button id="profile-icon" onclick="doSome()"></button>
+            </div>
+        </div>
+
+        <div class="container-video">
+            <div class="content-videocall" id="session-content">
+                <div id="videos">
+                    <video class="video-player large" id="main-video" autoplay playsinline></video>
+                    <video class="video-player small" id="small-video" autoplay playsinline></video>
+
+                    <div id="call-switch-buttons">
+                        <button id="swap-btn"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        <button id="toggle-small-video-btn"><i class="fa-solid fa-eye-slash"></i></button>
+                    </div>
+                </div>
+        
+                <div class="controls">
+                    <button id="mute-btn"><i class="fa-solid fa-microphone"></i></button>
+                    <button id="camera-btn"><i class="fa-solid fa-video"></i></button>
+                    <button id="leave-btn"><i class="fa-solid fa-phone-slash"></i></button>
+                </div>
+            </div>
+            <input type="hidden" id="tutor-id" value="<%= tutorId %>">
+            <input type="hidden" id="student-id" value="<%= studentId %>">
+            <input type="hidden" id="event-id" value="<%= eventId %>">
+            <input type="hidden" id="identity-check" value="<%= username %>">
+        </div>
+        
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/call.js"></script>
+
+    </body>
+</html>

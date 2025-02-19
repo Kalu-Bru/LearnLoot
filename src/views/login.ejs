@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartRE | Registration</title>
+    <link rel="stylesheet" href="/registration-style.css">
+    <style>@import url('https://fonts.cdnfonts.com/css/do-futuristic');</style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="/" style="text-decoration:none">
+            <h1>LEARNLOOT</h1>
+        </a>
+    </div>
+  <div class="container">
+    <!-- Title section -->
+    <div id="registration-header">
+        <div class="title">Login</div>
+    </div>
+    <div class="content">
+      <!-- Registration form -->
+      <form action="/login" method="post">
+        <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+          <div class="login-alert-box">
+              <p><%= errorMessage %></p>
+          </div>
+        <% } %>
+        <div class="user-details">
+          <!-- Input for Full Name -->
+          <div class="input-box">
+            <span class="details">Username</span>
+            <input type="text" placeholder="Enter username or email" name="username" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Password</span>
+            <input type="password" placeholder="Enter your password" name="password" autocomplete="current-password" required>
+          </div>
+        </div>
+        <!-- Submit button -->
+        <div class="button">
+          <input type="submit" value="Login">
+        </div>
+      </form>
+      <p>Don't have an account yet? <a href="/registration">Register</a></p>
+    </div>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>

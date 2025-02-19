@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/style.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <div id="logo">
+                <a href="/marketplace">LEARN<span id="title-fx">LOOT</span></a>
+            </div>
+
+            <div id="profile-sidebar">
+                <button id="profile-icon" onclick="doSome()"></button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="menu-sidebar">
+                <a href="/home"><i class="fa-solid fa-table-list" style="padding-right:5px;"></i>Overview</a>
+                <a href="/schedule"><i class="fa-regular fa-calendar" style="padding-right:5px;"></i>Schedule</a>
+                <a href="/tutor"><i class="fa-solid fa-person-chalkboard" style="padding-right:5px;"></i>Tutoring</a>
+                <a href="/classes"><i class="fa-solid fa-graduation-cap" style="padding-right:5px;"></i>Classes</a>
+            </div>
+
+            <div class="content" id="tutor-content">
+                <div id="classes-header">
+                    <form action="/classes" method="post" id="classes-form">
+                        <div class="classes-input-field">
+                            <input id="subjectInput" class="form__field__classes" name="subject" placeholder="Insert subject" required autocomplete="off">
+                            <ul id="customDropdown" class="dropdown_classes">
+                                <li>Mathematics</li>
+                                <li>Physics</li>
+                                <li>Chemistry</li>
+                                <li>Economics</li>
+                                <li>History</li>
+                                <li>Philosophy</li>
+                                <li>Biology</li>
+                            </ul>
+                        </div>
+                        <div class="classes-input-field">
+                            <input id="languageInput" class="form__field__classes" name="language" placeholder="Insert teaching language" required autocomplete="off">
+                            <ul id="customDropdown2" class="dropdown_classes2">
+                                <li>Italiano</li>
+                                <li>Français</li>
+                                <li>Deutsch</li>
+                                <li>English</li>
+                            </ul>
+                        </div>
+                        <div class="classes-input-field">
+                            <input id="levelInput" class="form__field__classes" name="level" placeholder="Insert academic level" required autocomplete="off">
+                            <ul id="customDropdown3" class="dropdown_classes3">
+                                <li>Middle School</li>
+                                <li>High School</li>
+                                <li>College</li>
+                            </ul>
+                        </div>
+                        <div class="classes-input-field-submit">
+                            <input type="submit" class="form__field__classes__submit" value="Filter">
+                        </div>
+                    </form>
+                    <form action="/classes/reset" method="post" id="reset-classes-form">
+                        <input type="submit" class="form__field__classes__reset" value="Reset filters" disabled>
+                    </form>
+                </div>
+                <div id="classes-dashboard-search">
+                    <% if (events.length > 0) { %>
+                        <% events.forEach(event => { %>
+                            <div id="single-classes-session">
+                                <div id="classes-session-header">
+                                    <span><%= event.subject %></span>
+                                    <form action="/classes/search" method="post">
+                                        <input type="hidden" value="<%= event._id %>" name="event">
+                                        <button type="submit" id="application-submit-button"><i class="fa-solid fa-file-pen"></i> Apply</button>
+                                    </form>
+                                </div>
+                                <img id="subject-image" src="/images/subjects/<%= event.subject %>.jpg">
+                                <ul>
+                                    <li><%= event.language %></li>
+                                    <li><%= event.level %></li>
+                                    <li><%= event.price %> CHF/h</li>
+                                </ul>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div id="add-tutoring-form" style="display:none;">
+            <div id="tutor-form-header">
+                <span id="header-title-tutor">Add new tutoring session</span>
+                <button id="close-form-tutor" onclick="closeTutoring()">&#x2715;</button>
+            </div>
+        </div>
+
+        <script>
+            const classesInputs = document.querySelectorAll(".form__field__classes"); // Selects all inputs
+            const classesReset = document.querySelector(".form__field__classes__reset");
+
+            classesInputs.forEach(input => {
+                input.addEventListener("input", function () {
+                    console.log("Input detected!");
+                    const hasContent = Array.from(classesInputs).some(inp => inp.value.trim() !== "");
+
+                    if (hasContent) {
+                        classesReset.addAttribute("disabled");
+                        classesReset.style.cursor = "pointer";
+                        classesReset.style.color = "black";
+                    } else {
+                        classesReset.disabled = !hasContent;
+                        classesReset.style.cursor = "none";
+                        classesReset.style.color = "lightgray";
+                    }
+                });
+            });
+        </script>
+
+        <script src="/script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/style.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+        <script src="/socket.io/socket.io.min.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <div id="logo">
+                <a href="/classes" id="back-to-tutor"><i class="fa-solid fa-chevron-left"></i> Classes</a>
+            </div>
+
+            <div id="profile-sidebar">
+                <button id="profile-icon" onclick="doSome()"></button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="menu-sidebar">
+                <div id="session-materials">
+                    Materials
+                </div>
+                <div id="session-chat">
+                    Chat
+                </div>
+                <!-- <div>
+                    <a href="/videocall">Video</a>
+                </div> -->
+                <div id="highlight-square">
+
+                </div>
+            </div>
+            <div class="content-session" id="session-content">
+                <div id="materials-shared">
+                    <div id="materials-header">
+                        <div style="width:100px;height:50px;"></div>
+                        <button id="add-section-button" onclick="openNewSection()">Add section</button>
+                    </div>
+                    <div id="materials-content">
+                        <div id="materials-categories">
+
+                        </div>
+                        <div id="materials-main">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="chat-shared">
+                    <div id="chat-header">
+                        <span style="font-size:20px;padding-left:10px;margin-bottom:10px;" id="identity-name-span"><%= event.tutor%></span>
+                        <div class="shockwave-container" style="display:none;">
+                            <a href="/videocall/<%= event.tutor %>/<%= studentId %>/<%= event._id %>" id="call-notification">
+                                <i class="fa-solid fa-video"></i>
+                            </a>
+                        </div>
+                        <a href="/videocall/<%= event.tutor %>/<%= studentId %>/<%= event._id %>" id="start-call"><i class="fa-solid fa-video"></i> Start call</a>
+                    </div>
+                    <div id="chat-content">
+                        <div id="messages-container">
+                            <div id="messages">
+
+                            </div>
+                        </div>
+                        <form class="message-line" id="messages-form">
+                            <div id="user-message">
+                                <input id="user-message-input" type="text" placeholder="Enter message" autocomplete="off">
+                            </div>
+                            <div id="send-message">
+                                <button id="send-message-input" type="submit">
+                                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <input type="hidden" id="tutor-id" value="<%= event.tutor %>">
+                <input type="hidden" id="student-id" value="<%= studentId %>">
+                <input type="hidden" id="identity-check" value="<%= username %>">
+            </div>
+        </div>
+        <script src="/videocall.js"></script>
+    </body>
+</html>

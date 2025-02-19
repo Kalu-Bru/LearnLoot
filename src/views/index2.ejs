@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/style.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <div class="header">
+            <div id="logo">
+                <a href="/marketplace">LEARN<span id="title-fx">LOOT</span></a>
+            </div>
+
+            <div id="profile-sidebar">
+                <button id="profile-icon" onclick="doSome()"></button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="menu-sidebar">
+                <a href="" id="activated-bg"><i class="fa-solid fa-table-list" style="padding-right:5px;"></i>Overview</a>
+                <a href="/schedule"><i class="fa-regular fa-calendar" style="padding-right:5px;"></i>Schedule</a>
+                <a href="/tutor"><i class="fa-solid fa-person-chalkboard" style="padding-right:5px;"></i>Tutoring</a>
+                <a href="/classes"><i class="fa-solid fa-graduation-cap" style="padding-right:5px;"></i>Classes</a>
+            </div>
+
+            <div class="content">
+                <div id="overview-title">
+                    <span>Welcome back, Broski</span>
+                    <span>Level 2, 350 LLT</span>
+                </div>
+                <div id="overview-classes">
+                    <div id="overview-tutor">
+                        <a href="/schedule" style="text-decoration:none;color:black;">
+                            <span>Upcoming tutoring sessions:</span>
+                            <ul>
+                                <% if (sessions.length > 0) { %>
+                                    <% sessions.forEach(session => { %>
+                                        <% if (session.tutoring == true) { %>
+                                            <li><%= session.title %>: <%= session.start %></li>
+                                        <% } %>
+                                    <% }) %>
+                                <% } else { %>
+                                    <span>No sessions scheduled</span>
+                                <% } %>
+                            </ul>
+                        </a>
+                    </div>
+                    <div id="overview-student">
+                        <a href="/schedule" style="text-decoration:none;color:black;">
+                            <span>Upcoming classes sessions:</span>
+                            <ul>
+                                <% if (sessions.length > 0) { %>
+                                    <% sessions.forEach(session => { %>
+                                        <% if (session.tutoring == false) { %>
+                                            <li><%= session.title %>: <%= session.start %></li>
+                                        <% } %>
+                                    <% }) %>
+                                <% } else { %>
+                                    <span>No sessions scheduled</span>
+                                <% } %>
+                            </ul>
+                        </a>
+                    </div>
+                </div>
+                <span style="font-size:1000px;">Upcoming classes sessions:</span>
+            </div>
+        </div>
+        <script src="/script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/style.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+        <script src="/socket.io/socket.io.min.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <div id="logo">
+                <a href="/tutor/session/<%= id %>" id="back-to-tutor"><i class="fa-solid fa-chevron-left"></i> Sessions</a>
+            </div>
+
+            <div id="profile-sidebar">
+                <button id="profile-icon" onclick="doSome()"></button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="menu-sidebar">
+                <div id="session-materials">
+                    Materials
+                </div>
+                <div id="session-chat">
+                    Chat
+                </div>
+                <div>
+                    <button id="session-delete" onclick="deleteTutoring()"><i class="fa-solid fa-trash-can"></i> Close session </button>
+                </div>
+                <!-- <div>
+                    <a href="/videocall">Video</a>
+                </div> -->
+                <div id="highlight-square">
+
+                </div>
+            </div>
+            <div class="content-session" id="session-content">
+                <div id="materials-shared">
+                    <div id="materials-header">
+                        <button id="add-tutoring-button" onclick="openNewCalendarEvent()">Add tutoring session</button>
+                        <button id="add-section-button" onclick="openNewSection()">Add section</button>
+                    </div>
+                    <div id="materials-content">
+                        <div id="materials-categories">
+                            <div id="sectionData" data-id="<%= id %>" data-student-id="<%= studentId %>"></div>
+                            <% if (room != null) { %>
+                                <% room.section.forEach(sec => { %>
+                                    <div class="new-section">
+                                        <div id="section-name">
+                                            <%= sec.name %>
+                                        </div>
+                                        <button type="submit" id="delete-section-button" onclick="openDeleteSecAlert('<%= sec.name %>')"><i class="fa-solid fa-x"></i></button>
+                                    </div>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                        <div id="materials-main">
+                            <% if (room != null) { %>
+                                <% room.section.forEach(sec => { %>
+                                    <div class="section-single">
+                                        <div class="upload-document" data-sec-name="<%= sec.name %>">
+                                            <span id="upload-doc-span">Upload document</span>
+                                            <i class="fa-solid fa-plus" style="padding-right:10px;"></i>
+                                        </div>
+                                        <table id="documents-table">
+                                            <thead>
+                                                <tr>
+                                                    <td>Documents</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% sec.files.forEach(doc => { %>
+                                                    <tr class="materials-table-row">
+                                                        <td>
+                                                            <a href="/file/<%= doc %>" target="_blank" rel="noopener noreferrer">
+                                                                <%= doc.split("_").slice(0, -1).join("_"); %>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="chat-shared">
+                    <div id="chat-header">
+                        <span style="font-size:20px;padding-left:10px;margin-bottom:10px;" id="identity-name-span"><%= event.students[studentId] %></span>
+                        <div class="shockwave-container" style="display:none;">
+                            <a href="/videocall/<%= event.tutor %>/<%= studentId %>/<%= event._id %>" id="call-notification">
+                                <i class="fa-solid fa-video"></i>
+                            </a>
+                        </div>
+                        <a href="/videocall/<%= event.tutor %>/<%= studentId %>/<%= event._id %>" id="start-call"><i class="fa-solid fa-video" style="margin-right:5px;"></i> Start call</a>
+                    </div>
+                    <div id="chat-content">
+                        <div id="messages-container">
+                            <div id="messages">
+
+                            </div>
+                        </div>
+                        <form class="message-line" id="messages-form">
+                            <div id="user-message">
+                                <input id="user-message-input" type="text" placeholder="Enter message" autocomplete="off">
+                            </div>
+                            <div id="send-message">
+                                <button id="send-message-input" type="submit">
+                                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <input type="hidden" id="tutor-id" value="<%= event.tutor %>">
+                <input type="hidden" id="student-id" value="<%= studentId %>">
+                <input type="hidden" id="identity-check" value="<%= username %>">
+            </div>
+            <div id="delete-tutor-alert" style="display:none;">
+                <div id="delete-alert-span">Are you sure to close the session with this student?</div>
+                <div id="delete-alert-buttons">
+                    <button id="close-delete-tutoring" onclick="closeDeleteTutoring()">Cancel</button>
+                    <form action="/tutor/session/<%= id %>/<%= event.students[studentId] %>" method="post">
+                        <button id="confirm-delete-tutoring" type="submit">Yes, delete</button>
+                    </form>
+                </div>
+            </div>
+            <div id="new-calendar-event" style="display:none;">
+                <div id="calendar-form-header">
+                    <span id="header-title-calendar-form">Add new tutoring session</span>
+                    <button id="close-calendar-form" onclick="closeNewCalendarEvent()">&#x2715;</button>
+                </div>
+                <form action="/newEvent" method="post" id="calendar-form">
+                    <input type="hidden" value="<%= event._id %>" name="eventId">
+                    <input type="hidden" value="<%= event.students[studentId] %>" name="student">
+                    <label id="calendar-form-labels" for="start">Start Date and Time:</label>
+                    <input class="form__field__calendar" type="datetime-local" placeholder="Insert starting date and time" name="start">
+                    <label id="calendar-form-labels" for="end">End Date and Time:</label>
+                    <input class="form__field__calendar" type="datetime-local" placeholder="Insert ending date and time" name="end">
+                    <input class="form__field__calendar__submit" type="submit" value="Add session">
+                </form>
+            </div>
+            <div id="upload-doc-popup" style="display:none;">
+                <div id="calendar-form-header">
+                    <span id="header-title-calendar-form">Upload document</span>
+                    <button id="close-upload-doc-form" onclick="closeDocUpload()">&#x2715;</button>
+                </div>
+                <form action="/upload-document" method="post" id="upload-doc-form" enctype="multipart/form-data">
+                    <input type="hidden" value="<%= event._id %>" name="eventId">
+                    <input type="hidden" value="<%= studentId %>" name="student">
+                    <input type="hidden" value="<%= event.tutor %>" name="tutor">
+                    <input type="hidden" value="" name="section">
+                    <label id="calendar-form-labels" for="title">File name</label>
+                    <input class="form__field__document" type="text" placeholder="Insert file name..." name="title">
+                    <input class="form__field__document__file" type="file" name="fileDoc">
+                    <input class="form__field__calendar__submit" type="submit" value="Add session">
+                </form>
+            </div>
+            <div id="delete-section-alert" style="display:none;">
+                <div id="delete-alert-span">Are you sure to delete this section? Shared data will be lost.</div>
+                <div id="delete-alert-buttons">
+                    <button id="close-delete-tutoring" onclick="closeDeleteSecAlert()">Cancel</button>
+                    <form action="/delete-section/<%= event.tutor %>/<%= studentId %>/<%= id %>" method="post">
+                        <input type="hidden" id="section-name-delete" value="" name="section">
+                        <button id="confirm-delete-tutoring" type="submit">Yes, delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="/videocall.js"></script>
+    </body>
+</html>
