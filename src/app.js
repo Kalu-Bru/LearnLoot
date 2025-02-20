@@ -60,10 +60,10 @@ const expressServer = app.listen(PORT, HOST, () => {
 
 const socketio = require("socket.io");
 const io = socketio(expressServer, {
-    cors: {
-        origin: "https://b676-2a04-ee41-4-724d-b917-9248-6a61-191f.ngrok-free.app",
-        methods: ["GET", "POST"]
-      }
+    // cors: {
+    //     origin: "https://b676-2a04-ee41-4-724d-b917-9248-6a61-191f.ngrok-free.app",
+    //     methods: ["GET", "POST"]
+    // }
 }) 
 
 app.set('views', path.join(__dirname, 'views'));

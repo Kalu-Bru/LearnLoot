@@ -186,7 +186,8 @@ activeSections.forEach((item, index) => {
 
 
 
-const socket = io('http://localhost:3000');
+// const socket = io('http://localhost:3000');
+const socket = io('https://www.learnloot.ch/');
 // const socket = io('https://b676-2a04-ee41-4-724d-b917-9248-6a61-191f.ngrok-free.app/', {
 //     transports: ["websocket", "polling"],
 //     withCredentials: true
